@@ -1,0 +1,3 @@
+[submodule "Plugins/UE4PlasticPlugin"]
+	path = Plugins/UE4PlasticPlugin
+	url = ../UE4PlasticPlugin.git
