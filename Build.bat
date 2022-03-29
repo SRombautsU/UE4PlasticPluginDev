@@ -23,4 +23,4 @@ for %%i in ("%UPROJECT%") do (
 
 echo on
 %UBT% %UPROJECT% Win64 Development %PROJECT%Editor
-
+@echo off
