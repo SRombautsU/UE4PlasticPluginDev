@@ -14,6 +14,11 @@ if [%1] == [] (
 ) else (
   set VERSION=%1
 )
+if [%VERSION%] == [] (
+  echo Version is empty
+  exit /b 1
+)
+
 REM TODO: double check with the uplugin and also search in the README
 
 REM TODO: let's also check we are on main
@@ -44,12 +49,15 @@ if [%GIT_TAG%] == [] (
   @echo off
 )
 
-REM Let's ensure that the plugin is correctly built
-set /p BUILD="Build %VERSION% of the plugin (ENTER/N)? "
-if [%BUILD%] == [] (
-  call Build.bat
-  REM TODO ensure the build has succeeded
-)
+REM
+REM Unreal Engine 4.27
+REM
+
+REM Let's ensure that the plugin is correctly built for Unreal 4.27
+del /Q Plugins\UE4PlasticPlugin\Binaries\Win64\*
+call Build.bat 4
+REM TODO ensure the build has succeeded
+
 REM check for the binaries
 if NOT exist Plugins\UE4PlasticPlugin\Binaries\Win64\UE4Editor-PlasticSourceControl.dll (
   echo Something is wrong, some binaries are missing.
@@ -66,6 +74,36 @@ del %ARCHIVE_NAME_DBG%
 Tools\7-Zip\x64\7za.exe a -tzip %ARCHIVE_NAME_REL% Plugins -xr!".git*" -xr!Intermediate -xr!_config.yml -xr!Screenshots -xr!"*.pdb"
 Tools\7-Zip\x64\7za.exe a -tzip %ARCHIVE_NAME_DBG% Plugins -xr!".git*" -xr!Intermediate -xr!_config.yml -xr!Screenshots
 @echo off
+
+REM
+REM Unreal Engine 5.0
+REM
+
+REM Let's ensure that the plugin is correctly built for Unreal 5.0
+del /Q Plugins\UE4PlasticPlugin\Binaries\Win64\*
+call Build.bat 5
+REM TODO ensure the build has succeeded
+
+REM check for the binaries
+if NOT exist Plugins\UE4PlasticPlugin\Binaries\Win64\UnrealEditor-PlasticSourceControl.dll (
+  echo Something is wrong, some binaries are missing.
+  exit /b 1
+)
+
+set ARCHIVE_NAME_REL=UE5PlasticPlugin-%VERSION%.zip
+set ARCHIVE_NAME_DBG=UE5PlasticPlugin-%VERSION%-with-debug-symbols.zip
+
+echo on
+del %ARCHIVE_NAME_REL%
+del %ARCHIVE_NAME_DBG%
+
+Tools\7-Zip\x64\7za.exe a -tzip %ARCHIVE_NAME_REL% Plugins -xr!".git*" -xr!Intermediate -xr!_config.yml -xr!Screenshots -xr!"*.pdb"
+Tools\7-Zip\x64\7za.exe a -tzip %ARCHIVE_NAME_DBG% Plugins -xr!".git*" -xr!Intermediate -xr!_config.yml -xr!Screenshots
+@echo off
+
+REM
+REM Done
+REM
 
 echo .
 echo NOTE: After validation, push the new tag using:
