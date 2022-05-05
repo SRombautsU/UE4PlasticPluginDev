@@ -5,20 +5,21 @@ set ROOTPATH=%~dp0
 
 pushd %ROOTPATH%
 
+REM Default to Unreal Engine 4, but can be overriden to Sources from Github or to UE4
 if [%1] == [] (
-  set /p ENGINE="Select the version of the Engine to build with [4/5]: "
+  set ENGINE=4
 ) else (
   set ENGINE=%1
 )
-if [%ENGINE%] == [] (
-  echo Engine version is empty
-  exit /b 1
-) else if "%ENGINE%" == "4" (
+
+if "%ENGINE%" == "4" (
   set UBT="C:\Program Files\Epic Games\UE_4.27\Engine\Binaries\DotNET\UnrealBuildTool.exe"
 ) else if "%ENGINE%" == "5" (
   set UBT="C:\Program Files\Epic Games\UE_5.0\Engine\Binaries\DotNET\UnrealBuildTool\UnrealBuildTool.exe"
+) else if "%ENGINE%" == "S" (
+  set UBT="C:\Workspace\UnrealEngine\Engine\Binaries\DotNET\UnrealBuildTool\UnrealBuildTool.exe"
 ) else (
-  echo Engine version '%ENGINE%' need to be 4 or 5
+  echo Engine version '%ENGINE%' need to be 4, 5 or S for Sources from Github
   exit /b 1
 )
 
