@@ -1,3 +1,4 @@
-[submodule "Plugins/UE4PlasticPlugin"]
-	path = Plugins/UE4PlasticPlugin
-	url = ../UE4PlasticPlugin.git
+[submodule "Plugins/UEPlasticPlugin"]
+	path = Plugins/UEPlasticPlugin
+	url = https://github.com/PlasticSCM/UEPlasticPlugin.git
+	branch = master
