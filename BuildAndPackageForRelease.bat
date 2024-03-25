@@ -62,6 +62,7 @@ call :BuildAndPackage 5.0
 call :BuildAndPackage 5.1
 call :BuildAndPackage 5.2
 call :BuildAndPackage 5.3
+call :BuildAndPackage 5.4
 call :BuildAndPackage 4.27
 REM
 REM #####################
